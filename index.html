@@ -1,0 +1,240 @@
+﻿<!DOCTYPE html>
+<html lang="es-MX">
+
+	<head>
+		<meta charset="utf-8" />
+		<title>Tijuanarb &bull; 17 de Abril en Mind-Hub</title>
+		<link rel="stylesheet" href="stylesheets/style.css">
+		<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Maven+Pro'>		
+		<script src="javascripts/modernizr.js"></script>
+	</head>
+
+	<body id="top">
+		
+		<header id="header">
+			
+			<section id="title">
+				
+				<h1><a title="TijuanaRB" href="#top"><img alt="Tijuanarb" src="images/tijuanarb-logo.png" /></a></h1>
+				
+				<nav>
+					<ul>
+						<li><a title="De los rieles a la nube" href="#delosrielesalanube">De los rieles a la nube</a></li>
+						<li><a title="Oauth Oauth is everywhere!!" href="#oauthoauthiseverywhere">Oauth Oauth is everywhere!!</a></li>
+						<li><a title="Bibliografia" href="#bibliografia">Bibliografia</a></li>
+						<li><a title="Contacto" href="#contacto">Contacto</a></li>
+					</ul>
+				</nav>
+				
+			</section><!--end /#title -->
+			
+		</header><!--end /#header -->
+		
+		<div id="page">
+			
+			<div id="content">
+				
+				<div id="delosrielesalanube">
+					
+					
+					<h2><img alt="De los rieles a la nube" src="images/cloud-upload-128.png" /><br/>De los rieles a la nube</h2>
+					
+					<h3>I. Crear una app en <b>Rails</b> en Mac OS X</h3>
+					
+					<ol>
+						<li>Abrimos nuestra <em>Terminal</em>.</li>
+
+						<li>Nos vamos a nuestro directorio de Rails apps.</li>
+
+						<li>Creamos nuestra primera app:
+						<pre>$ rails new inventario</pre>
+						</li>
+
+						<li>Entramos al directorio de nuestra app:
+						<pre>$ rails cd inventario</pre>
+						</li>
+
+						<li>Corremos el servidor para ver que nuestra app este en optimas condiciones:
+						<pre>$ rails server</pre>
+						</li>
+
+						<li>Abrimos nuestro navegador en <a title="Localhost" href="http://localhost:3000/" target="_blank">http://localhost:3000/</a> para comprobar que nuestra app funciona.</li>
+
+						<li>Una vez funcionando regresamos a la <em>terminal</em> y presionamos <b>ctr + c</b> para interrumpir el servidor.</li>
+
+						<li>Generamos un <em>CRUD (Create, Read, Update &amp; Delete)</em> para almacenar información de nuestro inventario:
+						<pre>$ rails generate scaffold product name:string description:text number:integer price:decimal</pre>
+						</li>
+						
+						<li>Creamos las migracion en la base de datos:
+						<pre>$ rake db:migrate</pre>
+						</li>
+						
+						<li>corremos el servidor para ver que nuestra app este funcionando:
+						<pre>$ rails server</pre>
+						</li>
+
+						<li>abrimos nuestro navegador en <a title="Localhost" href="http://localhost:3000/" target="_blank">http://localhost:3000/</a> para comprobarlo.</li>		
+						
+						<li>Comenzamos a llenar nuestra info...</li>
+					</ol>
+					
+				</div><!--end /#delosrielesalanube -->
+				
+				<div id="oauthoauthiseverywhere">
+					
+					<h2><img alt="Oauth Oauth is everywhere!!" src="images/login-twitter-128.png" /><br />Oauth Oauth is everywhere!!</h2>
+					
+					<h3>II. Implementar la gema <b>devise</b> en nuestra app</h3>
+					
+					<ol>
+						<li>En nuestra anterior app agregamos dentro de nuestro <b>Gemfile</b>:
+						<pre>gem 'devise'</pre>
+						</li>
+						
+						<li>Corremos el <b>bundle install</b> en la <em>terminal</em> para actualizar gemas:
+						<pre>$ bundle install</pre>
+						</li>
+						
+						<li>Generamos la instalación de <b>devise</b> en nuestra app:
+						<pre>$ rails generate devise:install</pre>
+						</li>
+
+						<li>Agregamos dentro de <b>config/environments/development.rb</b> la siguiente linea:
+						<pre>config.action_mailer.default_url_options = { :host => 'localhost:3000' }</pre>
+						</li>
+
+						<li>Agregamos dentro de <b>config/routes.rb</b> la siguiente linea de ruta:
+						<pre>root :to => "products#index"</pre>
+						</li>
+						
+						<li>Eliminamos <b>index.html</b> del folder <b>public</b>.</li>
+
+						<li>Agregamos dentro de <b>app/views/layouts/application.html.erb</b> lo siguiente:
+<pre>&lt;p class=&quot;notice&quot;&gt;&lt;%= notice %&gt;&lt;/p&gt;
+&lt;p class=&quot;alert&quot;&gt;&lt;%= alert %&gt;&lt;/p&gt;</pre>
+						</li>
+
+						<li>Generamos un usuario con <em>devise</em>:
+						<pre>$ rails generate devise User</pre>
+						</li>
+
+						<li>Corremos las migraciones de las base de datos:
+						<pre>$ rake db:migrate</pre>
+						</li>
+						
+						<li>Revisamos las rutas disponibles:
+						<pre>$ rake routes</pre>
+						</li>
+						
+						<li>En <b>Rails 3.1.3</b> editamos el archivo <b>config/initializers/devise.rb</b> la linea <em>config.sign_out_via = :delete</em> por:
+						<pre>config.sign_out_via = :get</pre>	
+						</li>
+
+						<li>Agregamos las siguientes lineas dentro de <b>views/layouts/application.html.erb</b>:
+<pre>&lt;div id=&quot;user_nav&quot;&gt;
+&lt;% if user_signed_in? %&gt;
+	Signed in as &lt;%= current_user.email %&gt;. Not you?
+	&lt;%= link_to &quot;Sign out&quot;, destroy_user_session_path %&gt;
+&lt;% else %&gt;
+	&lt;%= link_to &quot;Sign up&quot;, new_user_registration_path %&gt; or
+	&lt;%= link_to &quot;Sign in&quot;, new_user_session_path %&gt;
+&lt;% end %&gt;
+&lt;/div&gt;</pre>
+						</li>
+						
+						<li>Corremos el servidor para ver que nuestra app este funcionando:
+						<pre>$ rails server</pre>
+						</li>
+						
+						<li>Abrimos nuestro navegador en <a title="Localhost de Products" href="http://localhost:3000/products" target="_blank">http://localhost:3000/products</a> para comprobarlo.</li>			
+						
+						<li>Comenzamos a generar un <em>sign_up</em> y a jugar con el.</li>
+
+						<li>Una vez funcionando regresamos a la terminal y presionamos <b>ctr + c</b> para interrumpir el servidor.</li>	
+
+						<li>dentro de <b>controllers/products_controller.rb</b> agregamos la siguiente linea:
+						<pre>before_filter :authenticate_user!, :except => [:show, :index]</pre>
+						</li>
+						
+						<li>corremos el servidor nuevamente e intentamos editar uno de nuestros productos
+						<pre>$rails server</pre>
+						</li>
+						
+						<li>veremos que no nos permite editarla, hasta haber hecho <em>sign in</em>.</li>
+					</ol>
+					
+					
+					<h3>III. Implementar la gema <b>omniauth-twitter</b> en nuestra app</h3>
+					
+					<ol>
+						<li>Agregamos la gema de <b>omniauth-twitter</b> en nuestro <b>Gemfile</b>:
+						<pre>gem 'omniauth-twitter'</pre>
+						</li>
+						
+						<li>Corremos <b>bundle install</b> en nuestra <em>terminal</em>:
+						<pre>$ bundle install</pre>
+						</li>
+						
+					<li>Creamos el archivo <b>config/initializers/omniauth.rb</b> y dentro de el copiamos el siguiente código:
+<pre>Rails.application.config.middleware.use OmniAuth::Builder do
+   provider :twitter, "consumer_key", "consumer_secret" 
+end</pre>
+					</li>
+					
+					<li>Vamos al <a title="Dev Twitter" href="http://dev.twitter.com" target="_blank">dev.twitter.com</a> para obtener los <b>consumer_key</b> y <b>consumer_secret</b>.</li>
+
+					<li>Agregamos la siguiente redireccion en nuestro archivo de <b>routes.rb</b>
+					<pre>match '/auth/:provider/callback' => 'products#index'</pre>
+					</li>
+					
+					<li>Corremos el servidor para ver que nuestra app este funcionando:
+					<pre>$ rails server</pre>
+					</li>
+					
+					<li>Abrimos nuestro navegador en <a title="Twitter Auth" href="http://localhost:3000/auth/twitter" target="_blank">http://localhost:3000/auth/twitter</a> para comprobarlo.</li>
+
+					</ol>
+					
+					
+				</div><!--end /#oauthoauthiseverywhere -->
+				
+				<div id="bibliografia">
+					<h2><img alt="Bibliografia" src="images/inventory-tick-128.png" /><br />Bibliografia</h2>
+					<h3>Por donde comenzar...</h3>
+					<ul>
+						<li><img src="images/ltp2.jpg" /></li>
+						<li><img src="images/rails4.jpg" /></li>
+					</ul>
+				</div><!-- end /#bibliografia -->
+				
+				<div id="contacto">
+					<h2><img alt="Contacto" src="images/contact-card-128.png" /><br />Estanislao Vizcarra<br /><a title="Stanmx en Twitter" href="http://twitter.com/Stanmx" target="_blank">@stanmx</a><br /><a title="Email" href="mailto:stan@aestudio.mx">stan@aestudio.mx</a></h2>
+				</div><!--end /#contacto -->
+			
+			</div><!--end /#content -->
+			
+		</div><!--end /#page -->
+			
+		</div><!-- end /#contacto -->
+		<script src="javascripts/jquery-1.7.2.min.js"></script>
+		<script>				
+		$(document).ready(function() {
+			
+			$('a[href^="#"]').bind('click.smoothscroll',function (e) {
+				e.preventDefault();
+				
+				var target = this.hash,
+				$target = $(target);
+				
+				$('html, body').stop().animate({
+					'scrollTop': $target.offset().top
+					}, 900, 'swing', function () {
+					window.location.hash = target;
+				});
+			});
+		});		
+		</script>
+		<script src="javascripts/navigationfx.js"></script>
+	</body>
+</html>
